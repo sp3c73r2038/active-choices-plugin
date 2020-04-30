@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -52,8 +53,8 @@ public class TestDynamicReferenceParameter {
 
     @Test
     public void testConstructor() {
-        GroovyScript script = new GroovyScript(new SecureGroovyScript(SCRIPT, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
+        GroovyScript script = new GroovyScript(new MySecureGroovyScript(SCRIPT, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
         DynamicReferenceParameter param = new DynamicReferenceParameter("param000", "description", "some-random-name",
                 script, CascadeChoiceParameter.ELEMENT_TYPE_FORMATTED_HIDDEN_HTML, "param001, param002", true);
 

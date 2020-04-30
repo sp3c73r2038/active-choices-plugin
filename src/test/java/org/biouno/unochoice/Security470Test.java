@@ -27,6 +27,7 @@ package org.biouno.unochoice;
 import hudson.model.Job;
 import jenkins.model.Jenkins;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -50,16 +51,16 @@ public class Security470Test {
         j.jenkins.setAuthorizationStrategy(strategy);
 
         { // test HTML gets sanitized when run in sandbox
-            GroovyScript script = new GroovyScript(new SecureGroovyScript("return '<img src=\\'fail\\' onerror=\\'alert(\"foo\");\\' /><b>text</b>'", true, null),
+            GroovyScript script = new GroovyScript(new MySecureGroovyScript("return '<img src=\\'fail\\' onerror=\\'alert(\"foo\");\\' /><b>text</b>'", true, null),
                     null);
             DynamicReferenceParameter param = new DynamicReferenceParameter("whatever", "description", "some-random-name",
                     script, CascadeChoiceParameter.ELEMENT_TYPE_FORMATTED_HTML, "", true);
-            Assert.assertEquals("<img src=\"fail\"><b>text</b>", param.getChoicesAsStringForUI());
+            Assert.assertEquals("<img src=\"fail\" /><b>text</b>", param.getChoicesAsStringForUI());
         }
 
         { // test HTML does not get sanitized when run outside the sandbox
             String htmlScript = "return '<img src=\\'fail\\' onerror=\\'alert(\"foo\");\\' /><b>text</b>'";
-            GroovyScript script = new GroovyScript(new SecureGroovyScript(htmlScript, false, null),
+            GroovyScript script = new GroovyScript(new MySecureGroovyScript(htmlScript, false, null),
                     null);
             DynamicReferenceParameter param = new DynamicReferenceParameter("whatever", "description", "some-random-name",
                     script, CascadeChoiceParameter.ELEMENT_TYPE_FORMATTED_HTML, "", true);

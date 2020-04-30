@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -62,8 +63,8 @@ public class TestParametersOrder {
         parameters.put("A", "A");
 
         ChoiceParameter parameter = new ChoiceParameter("script001", "description", "random name",
-                new GroovyScript(new SecureGroovyScript(SCRIPT, Boolean.FALSE, null),
-                        new SecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null)),
+                new GroovyScript(new MySecureGroovyScript(SCRIPT, Boolean.FALSE, null),
+                        new MySecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null)),
                 ChoiceParameter.PARAMETER_TYPE_MULTI_SELECT, true, 0);
         Map<Object, Object> result = parameter.getChoices(Collections.<Object, Object>emptyMap());
         assertArrayEquals(parameters.keySet().toArray(), result.keySet().toArray());

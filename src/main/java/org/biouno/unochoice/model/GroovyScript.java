@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 import hudson.markup.RawHtmlMarkupFormatter;
+import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ApprovalContext;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -59,33 +60,18 @@ public class GroovyScript extends AbstractScript {
     private static final Logger LOGGER = Logger.getLogger(GroovyScript.class.getName());
 
     /**
-     * Script content.
-     */
-    @Deprecated
-    private transient String script;
-
-    /**
      * Secure script content.
      */
-    private SecureGroovyScript secureScript;
-
-    @Nullable
-    @Deprecated
-    private transient String fallbackScript;
+    private MySecureGroovyScript secureScript;
 
     /**
      * Secure fallback script content.
      */
     @Nullable
-    private SecureGroovyScript secureFallbackScript;
-
-    @Deprecated
-    public GroovyScript(String script, String fallbackScript) {
-        this(new SecureGroovyScript(script, false, null), new SecureGroovyScript(fallbackScript, false, null));
-    }
+    private MySecureGroovyScript secureFallbackScript;
 
     @DataBoundConstructor
-    public GroovyScript(SecureGroovyScript script, SecureGroovyScript fallbackScript) {
+    public GroovyScript(MySecureGroovyScript script, MySecureGroovyScript fallbackScript) {
         if (script != null) {
             this.secureScript = script.configuringWithNonKeyItem();
         }
@@ -94,28 +80,28 @@ public class GroovyScript extends AbstractScript {
         }
     }
 
-    private Object readResolve() {
-        if (script != null) {
-            secureScript = new SecureGroovyScript(script, false, null).configuring(ApprovalContext.create());
-        }
-        if (fallbackScript != null) {
-            secureFallbackScript = new SecureGroovyScript(fallbackScript, false, null)
-                    .configuring(ApprovalContext.create());
-        }
-        return this;
-    }
+//    private Object readResolve() {
+//        if (script != null) {
+//            secureScript = new SecureGroovyScript(script, false, null).configuring(ApprovalContext.create());
+//        }
+//        if (fallbackScript != null) {
+//            secureFallbackScript = new SecureGroovyScript(fallbackScript, false, null)
+//                    .configuring(ApprovalContext.create());
+//        }
+//        return this;
+//    }
 
     /**
      * @return the script
      */
-    public SecureGroovyScript getScript() {
+    public MySecureGroovyScript getScript() {
         return secureScript;
     }
 
     /**
      * @return the fallbackScript
      */
-    public SecureGroovyScript getFallbackScript() {
+    public MySecureGroovyScript getFallbackScript() {
         return secureFallbackScript;
     }
 
@@ -168,7 +154,7 @@ public class GroovyScript extends AbstractScript {
         }
 
         try {
-            Object returnValue = secureScript.evaluate(cl, context);
+            Object returnValue = secureScript.evaluate(cl, context, null);
             if (returnValue instanceof CharSequence) {
                 if (secureScript.isSandbox()) {
                     return new RawHtmlMarkupFormatter(false).translate(returnValue.toString());
@@ -179,7 +165,7 @@ public class GroovyScript extends AbstractScript {
             if (this.secureFallbackScript != null) {
                 try {
                     LOGGER.log(Level.FINEST, "Fallback to default script...", re);
-                    Object returnValue = secureFallbackScript.evaluate(cl, context);
+                    Object returnValue = secureFallbackScript.evaluate(cl, context, null);
                     if (returnValue instanceof CharSequence) {
                         if (secureFallbackScript.isSandbox()) {
                             return new RawHtmlMarkupFormatter(false).translate(returnValue.toString());
@@ -249,7 +235,7 @@ public class GroovyScript extends AbstractScript {
     }
 
     // --- descriptor
-
+    @Symbol("activeGroovy")
     @Extension
     public static class DescriptorImpl extends ScriptDescriptor {
         /*

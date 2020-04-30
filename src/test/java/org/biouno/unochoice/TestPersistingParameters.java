@@ -36,6 +36,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.biouno.unochoice.model.Script;
 import org.biouno.unochoice.model.ScriptlerScript;
 import org.biouno.unochoice.model.ScriptlerScriptParameter;
@@ -117,12 +118,12 @@ public class TestPersistingParameters {
     @Test
     public void testSaveParameters() throws Exception {
         FreeStyleProject project = j.createFreeStyleProject();
-        GroovyScript scriptParam001 = new GroovyScript(new SecureGroovyScript(SCRIPT_PARAM001, false, null),
-                new SecureGroovyScript(SCRIPT_FALLBACK_PARAM001, false, null));
+        GroovyScript scriptParam001 = new GroovyScript(new MySecureGroovyScript(SCRIPT_PARAM001, false, null),
+                new MySecureGroovyScript(SCRIPT_FALLBACK_PARAM001, false, null));
         ChoiceParameter param001 = new ChoiceParameter("param001", "param001 description", "random-name",
                 scriptParam001, AbstractUnoChoiceParameter.PARAMETER_TYPE_SINGLE_SELECT, true, 1);
-        GroovyScript scriptParam002 = new GroovyScript(new SecureGroovyScript(SCRIPT_PARAM002, false, null),
-                new SecureGroovyScript(SCRIPT_FALLBACK_PARAM002, false, null));
+        GroovyScript scriptParam002 = new GroovyScript(new MySecureGroovyScript(SCRIPT_PARAM002, false, null),
+                new MySecureGroovyScript(SCRIPT_FALLBACK_PARAM002, false, null));
         CascadeChoiceParameter param002 = new CascadeChoiceParameter("param002", "param002 description", "random-name",
                 scriptParam002, AbstractUnoChoiceParameter.PARAMETER_TYPE_SINGLE_SELECT, "param001", true, 1);
         ParametersDefinitionProperty param001Def = new ParametersDefinitionProperty(
@@ -180,8 +181,8 @@ public class TestPersistingParameters {
         ScriptlerScript scriptParam001 = new ScriptlerScript("dummy.groovy", Collections.singletonList(scriptlerScriptParameters));
         ChoiceParameter param001 = new ChoiceParameter("param001", "param001 description", "random-name",
                 scriptParam001, AbstractUnoChoiceParameter.PARAMETER_TYPE_SINGLE_SELECT, true, 1);
-        GroovyScript scriptParam002 = new GroovyScript(new SecureGroovyScript(SCRIPT_PARAM002, false, null),
-                new SecureGroovyScript(SCRIPT_FALLBACK_PARAM002, false, null));
+        GroovyScript scriptParam002 = new GroovyScript(new MySecureGroovyScript(SCRIPT_PARAM002, false, null),
+                new MySecureGroovyScript(SCRIPT_FALLBACK_PARAM002, false, null));
         CascadeChoiceParameter param002 = new CascadeChoiceParameter("param002", "param002 description", "random-name",
                 scriptParam002, AbstractUnoChoiceParameter.PARAMETER_TYPE_SINGLE_SELECT, "param001", true, 1);
         ParametersDefinitionProperty param001Def = new ParametersDefinitionProperty(

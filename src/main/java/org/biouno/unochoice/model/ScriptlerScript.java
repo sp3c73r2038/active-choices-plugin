@@ -128,7 +128,7 @@ public class ScriptlerScript extends AbstractScript {
      */
     public GroovyScript toGroovyScript() {
         final Script scriptler = ScriptHelper.getScript(getScriptlerScriptId(), true);
-        return new GroovyScript(new SecureGroovyScript(scriptler.script, false, null), null);
+        return new GroovyScript(new MySecureGroovyScript(scriptler.script, false, null), null);
     }
 
     // --- descriptor

@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.biouno.unochoice.ChoiceParameter;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -136,8 +137,8 @@ public class TestDefaultValuesOnParamBuildPage {
         ScriptApproval.get().preapprove(DEFAULT_FALLBACK_SCRIPT, GroovyLanguage.get());
 
         GroovyScript groovyScript = new GroovyScript(
-                new SecureGroovyScript(script, Boolean.FALSE, null),
-                new SecureGroovyScript(DEFAULT_FALLBACK_SCRIPT, Boolean.FALSE, null)
+                new MySecureGroovyScript(script, Boolean.FALSE, null),
+                new MySecureGroovyScript(DEFAULT_FALLBACK_SCRIPT, Boolean.FALSE, null)
         );
         return new ChoiceParameter(PARAMETER_NAME, "description", "random-name1", groovyScript, type, true, 1);
     }

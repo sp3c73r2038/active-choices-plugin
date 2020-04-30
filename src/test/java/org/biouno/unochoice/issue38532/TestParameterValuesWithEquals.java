@@ -31,6 +31,7 @@ import org.biouno.unochoice.CascadeChoiceParameter;
 import org.biouno.unochoice.ChoiceParameter;
 import org.biouno.unochoice.DynamicReferenceParameter;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -70,11 +71,11 @@ public class TestParameterValuesWithEquals {
 
     @Test
     public void testEvaluationWorksEvenThoughWeUsedEqualsInParameterValues() throws IOException {
-        GroovyScript listScript = new GroovyScript(new SecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
+        GroovyScript listScript = new GroovyScript(new MySecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
         GroovyScript listSelectionScript = new GroovyScript(
-                new SecureGroovyScript(SCRIPT_LIST_SELECTION, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT_LIST_SELECTION, Boolean.FALSE, null));
+                new MySecureGroovyScript(SCRIPT_LIST_SELECTION, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT_LIST_SELECTION, Boolean.FALSE, null));
         ChoiceParameter listParam = new ChoiceParameter("LIST", "description...", "random-name1", listScript,
                 CascadeChoiceParameter.PARAMETER_TYPE_SINGLE_SELECT, true, 1);
         DynamicReferenceParameter listSelectionParam = new DynamicReferenceParameter("LIST_SELECTION", "description...",

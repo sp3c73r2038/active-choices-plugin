@@ -31,6 +31,7 @@ import java.util.Map;
 import org.biouno.unochoice.CascadeChoiceParameter;
 import org.biouno.unochoice.ChoiceParameter;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -67,8 +68,8 @@ public class TestParameterObjectIsPresent {
 
     @Test
     public void testParameterObjectIsPresent() throws IOException {
-        GroovyScript listScript = new GroovyScript(new SecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
+        GroovyScript listScript = new GroovyScript(new MySecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
         ChoiceParameter listParam = new ChoiceParameter(PARAMETER_NAME, "description...", "random-name1", listScript,
                 CascadeChoiceParameter.PARAMETER_TYPE_MULTI_SELECT, true, 1);
         Map<Object, Object> listSelectionValue = listParam.getChoices();

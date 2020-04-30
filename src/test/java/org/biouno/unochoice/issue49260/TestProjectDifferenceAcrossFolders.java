@@ -32,6 +32,7 @@ import java.util.Map;
 import org.biouno.unochoice.CascadeChoiceParameter;
 import org.biouno.unochoice.ChoiceParameter;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -94,8 +95,8 @@ public class TestProjectDifferenceAcrossFolders {
         FreeStyleProject projectA = folderA.createProject(FreeStyleProject.class, PROJECT_NAME);
         FreeStyleProject projectB = folderB.createProject(FreeStyleProject.class, PROJECT_NAME);
 
-        GroovyScript listScript = new GroovyScript(new SecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
-        new SecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
+        GroovyScript listScript = new GroovyScript(new MySecureGroovyScript(SCRIPT_LIST, Boolean.FALSE, null),
+        new MySecureGroovyScript(FALLBACK_SCRIPT_LIST, Boolean.FALSE, null));
         
         PowerMockito.mockStatic(Stapler.class);
 

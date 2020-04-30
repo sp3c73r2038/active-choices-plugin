@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.biouno.unochoice.model.ScriptlerScriptParameter;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
@@ -63,8 +64,8 @@ public class TestScriptCallback {
         List<ScriptlerScriptParameter> params = new ArrayList<ScriptlerScriptParameter>();
         params.add(new ScriptlerScriptParameter("name1", "value1"));
         params.add(new ScriptlerScriptParameter("name2", "value2"));
-        GroovyScript script = new GroovyScript(new SecureGroovyScript(SCRIPT, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
+        GroovyScript script = new GroovyScript(new MySecureGroovyScript(SCRIPT, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("flag", "true");
         ScriptCallback<Exception> sc = new ScriptCallback<Exception>("callback1", script, parameters);

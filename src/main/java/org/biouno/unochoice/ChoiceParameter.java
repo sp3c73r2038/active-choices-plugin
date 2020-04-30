@@ -28,6 +28,7 @@ import hudson.Extension;
 
 import org.apache.commons.lang.StringUtils;
 import org.biouno.unochoice.model.Script;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -140,6 +141,7 @@ public class ChoiceParameter extends AbstractScriptableParameter {
 
     // --- descriptor
 
+    @Symbol("activeChoice")
     @Extension
     public static final class DescriptImpl extends UnoChoiceParameterDescriptor {
 
@@ -150,4 +152,8 @@ public class ChoiceParameter extends AbstractScriptableParameter {
 
     }
 
+    @Override
+    public ParameterDescriptor getDescriptor() {
+        return super.getDescriptor();
+    }
 }

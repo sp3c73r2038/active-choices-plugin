@@ -32,6 +32,7 @@ import java.util.Map;
 import org.biouno.unochoice.CascadeChoiceParameter;
 import org.biouno.unochoice.ChoiceParameter;
 import org.biouno.unochoice.model.GroovyScript;
+import org.biouno.unochoice.model.MySecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval;
 import org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage;
@@ -71,8 +72,8 @@ public class TestGlobalNodePropertiesScript {
                 testMap.get("time"));
         EnvironmentVariablesNodeProperty envVarsNodeProp = new EnvironmentVariablesNodeProperty(entry);
         j.jenkins.getGlobalNodeProperties().add(envVarsNodeProp);
-        GroovyScript script = new GroovyScript(new SecureGroovyScript(SCRIPT, Boolean.FALSE, null),
-                new SecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
+        GroovyScript script = new GroovyScript(new MySecureGroovyScript(SCRIPT, Boolean.FALSE, null),
+                new MySecureGroovyScript(FALLBACK_SCRIPT, Boolean.FALSE, null));
         ChoiceParameter param = new ChoiceParameter("param000", "description", "randomName", script,
                 CascadeChoiceParameter.ELEMENT_TYPE_FORMATTED_HIDDEN_HTML, true, 0);
 
